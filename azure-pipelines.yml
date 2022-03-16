@@ -1,9 +1,9 @@
-schedules:
-- cron: "0 11 * * *"
-  displayName: Triggered once a day
-  branches:
-    include:
-    - '*'
+#schedules:
+#- cron: "0 11 * * *"
+#  displayName: Triggered once a day
+#  branches:
+#    include:
+#    - '*'
 
 pr: none
 trigger: none
