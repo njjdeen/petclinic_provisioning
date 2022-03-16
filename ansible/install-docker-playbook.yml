@@ -1,0 +1,62 @@
+---
+- name: "install docker"
+  hosts: azure-agent
+  user: VMadmin
+  tasks:
+
+    - name: Install apt
+      apt:
+        name: aptitude
+        state: latest
+        #update_cache: yes
+        #upgrade: dist
+      become: yes
+
+    - name: update and upgrade packages
+      become: true
+      apt: 
+        force_apt_get: yes
+        upgrade: yes
+        #upgrade: dist
+        #cache_valid_time: 86400
+
+    - name: Install required packages
+      apt: 
+        force_apt_get: yes
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+          - python3
+          - python3-pip
+        state: latest
+        #update_cache: true
+        #upgrade: dist
+      become: yes
+
+    - name: Add Docker GPG apt Key
+      become: yes
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      become: yes
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+
+
+    - name: update apt and install docker
+      become: yes
+      apt: 
+        force_apt_get: yes
+        name: docker-ce
+        state: latest
+        
+    - name: install python library for docker
+      become: yes
+      shell: pip3 install docker

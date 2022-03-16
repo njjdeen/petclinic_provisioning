@@ -1,0 +1,13 @@
+---
+- name: "run petclinic docker container"
+  hosts: azure-agent
+  user: VMadmin
+  tasks:
+    
+    - name: Start container with command
+      become: yes
+      docker_container:
+        name: Petclinic_container
+        image: nde01/petclinic:3.0 
+        command: mvn package cargo:run
+        published_ports: 0.0.0.0:8080:9999

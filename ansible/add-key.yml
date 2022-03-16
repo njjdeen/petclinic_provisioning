@@ -1,0 +1,14 @@
+---
+- name: "Playbook to Add Key to azure VM's"
+  hosts: hosts-to-add-key
+  vars:
+    user: VMadmin
+    key: 
+  
+  tasks:
+
+  - name: "Copy the authorized key file from VM"
+    ansible.posix.authorized_key:
+      user: VMadmin
+      state: present
+      key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"

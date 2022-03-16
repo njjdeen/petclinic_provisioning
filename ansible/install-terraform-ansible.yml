@@ -1,0 +1,68 @@
+---
+- name: "install ansible and terraform"
+  hosts: azure-agent
+  #connection: local
+  user: VMadmin
+  tasks:
+
+    - name: Install apt
+      apt:
+        name: aptitude
+        state: latest
+        #update_cache: yes
+        #upgrade: dist
+      become: yes
+
+    - name: update and upgrade packages
+      become: true
+      apt: 
+        force_apt_get: yes
+        upgrade: yes
+        #upgrade: dist
+        #cache_valid_time: 86400
+
+    - name: Install required packages and ansible
+      apt: 
+        force_apt_get: yes
+        pkg:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+          - python3
+          - python3-pip
+          - ansible
+        state: latest
+        #update_cache: true
+        #upgrade: dist
+      become: yes
+
+    - name: Add terraform GPG apt Key
+      become: yes
+      apt_key:
+        url: https://apt.releases.hashicorp.com/gpg
+        state: present
+
+    - name: Add terraform apt Repository
+      become: yes
+      apt_repository:
+        repo: deb [arch=amd64] https://apt.releases.hashicorp.com focal main
+        state: present
+
+        
+
+    - name: update packages
+      become: true
+      apt: 
+        force_apt_get: yes
+        #upgrade: yes
+        #upgrade: dist
+        #cache_valid_time: 86400
+
+    - name: install terraform
+      become: true
+      apt: 
+        force_apt_get: yes
+        pkg:
+          - terraform      

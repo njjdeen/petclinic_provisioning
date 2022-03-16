@@ -1,0 +1,11 @@
+---
+- name: "stop petclinic docker container"
+  hosts: azure-agent
+  user: VMadmin
+  tasks:
+
+  - name: Stop a container
+    become: yes
+    docker_container:
+      name: Petclinic_container
+      state: stopped

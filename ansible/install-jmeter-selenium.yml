@@ -1,0 +1,65 @@
+---
+- name: "install Jmeter, Selenium, google chrome and webdriver on Azure agent VM"
+  hosts: azure-agent
+  remote_user: VMadmin
+
+  tasks: 
+
+    - name: install dependencies for Jmeter and Selenium
+      become: yes
+      apt: 
+        force_apt_get: yes
+        pkg:
+          - openjdk-8-jdk
+          - wget
+          - zip
+          - unzip
+          - python3
+          - python3-pip
+      
+
+    - name: install selenium using pip
+      become: yes
+      shell: pip3 install selenium
+
+    - name: download Jmeter
+      shell: wget -O /opt/apache-jmeter-5.3.zip https://downloads.apache.org//jmeter/binaries/apache-jmeter-5.3.zip
+      args:
+        creates: /opt/apache-jmeter-5.3.zip
+
+    - name: Unzip Jmeter
+      shell: cd /opt && unzip apache-jmeter-5.3.zip
+      args:
+        creates: /opt/apache-jmeter-5.3
+
+    - name: download google chrome
+      shell: wget -O ~/google-chrome-stable_current_amd64.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      args:
+        creates: ~/google-chrome-stable_current_amd64.deb
+
+    - name: install google chrome
+      shell: sudo dpkg -i ~/google-chrome-stable_current_amd64.deb
+
+
+    - name: download chrome driver
+      shell: wget -O ~/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/98.0.4758.102/chromedriver_linux64.zip
+      args:
+        creates: ~/chromedriver_linux64.zip
+
+    - name: unzip chrome driver
+      shell: cd ~ && unzip chromedriver_linux64.zip
+      args:
+        creates: ~/chromedriver
+
+    - name: move chrome driver to usr/bin
+      shell: sudo mv ~/chromedriver /usr/bin/chromedriver
+      args:
+        creates: /usr/bin/chromedriver
+
+    - name: change ownership of chromedriver to Root
+      shell: sudo chown root:root /usr/bin/chromedriver #&& sudo chmod +x /usr/bin/chromedriver && chromedriver --url-base=/wd/hub
+
+    - name: give VMadmin execute permission
+      shell: sudo chmod +x /usr/bin/chromedriver
+
+    
