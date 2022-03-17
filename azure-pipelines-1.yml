@@ -5,23 +5,29 @@ pool:
   name: 'VM-agent'
 
 steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'package'
 
-- task: Maven@3
+- task: TerraformInstaller
+  displayName: Install Terraform
   inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'deploy'
-    mavenOptions: '-DskipTests'
+    terraformVersion: latest
 
-- task: Bash@3
+##Ansible needs to be pre-installed
+
+- task: UsePythonVersion@0
+  displayName: 'Install Python'
   inputs:
-    targetType: inline
-    script: 
-      pwd &&
-      pip install selenium ;
-      python3 selenium_test.py &&
-      echo "Selenium test SUCCEEDED"
-      
+    versionSpec: '3.8'
+
+- task: AzureCLI@2
+  displayName: 'Azure CLI'
+  inputs:
+    azureSubscription: '$(SUBSCRIPTION_NAME)'
+    addSpnToEnvironment: true
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$(az account show --query="id" -o tsv)"
+      echo "##vso[task.setvariable variable=ARM_CLIENT_ID]${servicePrincipalId}"
+      echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]${servicePrincipalKey}"
+      echo "##vso[task.setvariable variable=ARM_TENANT_ID]${tenantId}"      
+
