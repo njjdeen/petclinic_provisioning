@@ -10,7 +10,7 @@ steps:
 - task: AzureCLI@2
   displayName: Azure CLI
   inputs:
-    azureSubscription: <Name of the Azure Resource Manager service connection>
+    azureSubscription: azure-cli-2022-03-15-08-33-56
     scriptType: ps
     scriptLocation: inlineScript
     inlineScript: |
