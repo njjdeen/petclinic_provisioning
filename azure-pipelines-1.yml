@@ -6,12 +6,7 @@ pool:
 
 steps:
 
-- task: TerraformInstaller@0
-  displayName: Install Terraform
-  inputs:
-    terraformVersion: latest
-
-##Ansible needs to be pre-installed
+##terraform needs to be pre-installed on azure agent before running this pipeline
 
 - task: UsePythonVersion@0
   displayName: 'Install Python'
