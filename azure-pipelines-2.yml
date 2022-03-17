@@ -26,7 +26,7 @@ steps:
   #  targetType: inline
    # script: echo $(SERVICE_PRINCIPAL_USER) && echo $(SERVICE_PRINCIPAL_PASSWD) && echo $(SERVICE_PRINCIPAL_TENANT)
 
-- bash: az --version
+- bash: az account show
   displayName: 'Show Azure CLI version'
 
 #- task: Bash@3
