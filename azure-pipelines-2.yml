@@ -17,8 +17,11 @@ steps:
       az --version
       az account show
 
-- task: Bash@3
+
+- task: AzureCLI@2
   inputs:
-    targetType: inline
-    script: 
-      cd ~ && touch testfile.new
+    azureSubscription: 'azure-cli-2022-03-15-08-33-56'
+    scriptType: 'batch'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'terraform init'
+    workingDirectory: './terraform'
