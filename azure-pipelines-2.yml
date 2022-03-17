@@ -6,13 +6,7 @@ pool:
 
 steps:
 
-#terraform needs to be pre-installed on azure agent VM before running this pipeline
-
-- task: UsePythonVersion@0
-  displayName: 'Install Python'
-  inputs:
-    versionSpec: '3.8'
-
+#terraform and ansible need to be pre-installed on azure agent VM before running this pipeline
 - task: AzureCLI@2
   displayName: 'Azure CLI'
   inputs:
