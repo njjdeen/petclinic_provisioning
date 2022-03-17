@@ -29,8 +29,8 @@ steps:
 - bash: az --version
   displayName: 'Show Azure CLI version'
 
-- task: Bash@3
-  inputs:
-    targetType: inline
-    script:  az login --service-principal -u ${SERVICE_PRINCIPAL_USER} -p ${SERVICE_PRINCIPAL_PASSWD} --tenant ${SERVICE_PRINCIPAL_TENANT}
+#- task: Bash@3
+ # inputs:
+  #  targetType: inline
+   # script:  az login --service-principal -u ${SERVICE_PRINCIPAL_USER} -p ${SERVICE_PRINCIPAL_PASSWD} --tenant ${SERVICE_PRINCIPAL_TENANT}
     
