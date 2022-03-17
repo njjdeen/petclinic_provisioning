@@ -11,7 +11,7 @@ steps:
   displayName: Azure CLI
   inputs:
     azureSubscription: azure-cli-2022-03-15-08-33-56
-    scriptType: ps
+    scriptType: bash
     scriptLocation: inlineScript
     inlineScript: |
       az --version
