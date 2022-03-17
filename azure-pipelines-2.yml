@@ -26,3 +26,13 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: pwd && terraform init 
     workingDirectory: './terraform'
+    
+
+- task: AzureCLI@2
+  displayName: Make terraform plan
+  inputs:
+    azureSubscription: azure-cli-2022-03-15-08-33-56
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: terraform plan
+    workingDirectory: './terraform'
