@@ -19,6 +19,7 @@ steps:
 
 
 - task: AzureCLI@2
+  displayName: Initialize terraform repo
   inputs:
     azureSubscription: 'azure-cli-2022-03-15-08-33-56'
     scriptType: 'batch'
