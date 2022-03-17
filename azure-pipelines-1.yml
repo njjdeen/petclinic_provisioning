@@ -6,7 +6,7 @@ pool:
 
 steps:
 
-- task: TerraformInstaller
+- task: TerraformInstaller@0
   displayName: Install Terraform
   inputs:
     terraformVersion: latest
