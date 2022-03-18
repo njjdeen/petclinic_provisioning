@@ -37,3 +37,4 @@ steps:
     scriptLocation: inlineScript
     inlineScript: terraform plan
     workingDirectory: './terraform'
+    addSpnToEnvironment: true
