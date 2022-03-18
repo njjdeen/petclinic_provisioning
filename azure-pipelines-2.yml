@@ -40,7 +40,7 @@ steps:
     allowTelemetryCollection: true
     publishPlanResults: 'plan.tf'
     workingDirectory: './terraform'
-    allowTelemetryCollection: true
+    
 
 
 #- task: AzureCLI@2
