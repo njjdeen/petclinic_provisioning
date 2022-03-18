@@ -56,9 +56,10 @@ steps:
 
 - task: TerraformCLI@0
   inputs:
-    command: 'apply'
+    command: 'destroy'
     workingDirectory: './terraform'
     environmentServiceName: 'azure-cli-2022-03-15-08-33-56'
     providerAzureRmSubscriptionId: '41e50375-b926-4bc4-9045-348f359cf721'
     runAzLogin: true
     allowTelemetryCollection: true
+    
