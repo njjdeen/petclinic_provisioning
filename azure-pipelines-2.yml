@@ -18,21 +18,48 @@ steps:
       az account show
 
 
-- task: AzureCLI@2
-  displayName: Initialize terraform repo
+#- task: AzureCLI@2
+  #displayName: Initialize terraform repo
+ # inputs:
+  #  azureSubscription: 'azure-cli-2022-03-15-08-33-56'
+   # scriptType: 'bash'
+   # scriptLocation: 'inlineScript'
+   # inlineScript: pwd && terraform init 
+   # workingDirectory: './terraform'
+    
+    
+- task: TerraformCLI@0
   inputs:
-    azureSubscription: 'azure-cli-2022-03-15-08-33-56'
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
-    inlineScript: pwd && terraform init 
+    command: 'init'
+    workingDirectory: ./terraform
+- task: TerraformCLI@0
+  inputs:
+    command: 'plan'
+    environmentServiceName: 'azure-cli-2022-03-15-08-33-56'
+    providerAzureRmSubscriptionId: '41e50375-b926-4bc4-9045-348f359cf721'
+    runAzLogin: true
+    allowTelemetryCollection: true
+    #publishPlanResults: 'plan.tf'
     workingDirectory: './terraform'
     
 
-- task: AzureCLI@2
-  displayName: Make terraform plan
+
+#- task: AzureCLI@2
+ # displayName: Make terraform plan
+  #inputs:
+   # azureSubscription: azure-cli-2022-03-15-08-33-56
+   # scriptType: bash
+   # scriptLocation: inlineScript
+   # inlineScript: terraform apply
+   # workingDirectory: './terraform'
+   # addSpnToEnvironment: true
+
+- task: TerraformCLI@0
   inputs:
-    azureSubscription: azure-cli-2022-03-15-08-33-56
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: terraform plan
+    command: 'destroy'
     workingDirectory: './terraform'
+    environmentServiceName: 'azure-cli-2022-03-15-08-33-56'
+    providerAzureRmSubscriptionId: '41e50375-b926-4bc4-9045-348f359cf721'
+    runAzLogin: true
+    allowTelemetryCollection: true
+    
