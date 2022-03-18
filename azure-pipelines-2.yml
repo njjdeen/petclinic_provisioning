@@ -31,16 +31,24 @@ steps:
 - task: TerraformCLI@0
   inputs:
     command: 'init'
+- task: TerraformCLI@0
+  inputs:
+    command: 'plan'
+    environmentServiceName: 'azure-cli-2022-03-15-08-33-56'
+    providerAzureRmSubscriptionId: '41e50375-b926-4bc4-9045-348f359cf721'
+    runAzLogin: true
+    allowTelemetryCollection: true
+    publishPlanResults: 'plan.tf'
     workingDirectory: './terraform'
     allowTelemetryCollection: true
 
 
-- task: AzureCLI@2
-  displayName: Make terraform plan
-  inputs:
-    azureSubscription: azure-cli-2022-03-15-08-33-56
-    scriptType: bash
-    scriptLocation: inlineScript
-    inlineScript: terraform apply
-    workingDirectory: './terraform'
-    addSpnToEnvironment: true
+#- task: AzureCLI@2
+ # displayName: Make terraform plan
+  #inputs:
+   # azureSubscription: azure-cli-2022-03-15-08-33-56
+   # scriptType: bash
+   # scriptLocation: inlineScript
+   # inlineScript: terraform apply
+   # workingDirectory: './terraform'
+   # addSpnToEnvironment: true
