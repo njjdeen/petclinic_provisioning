@@ -31,6 +31,7 @@ steps:
 - task: TerraformCLI@0
   inputs:
     command: 'init'
+    workingDirectory: ./terraform
 - task: TerraformCLI@0
   inputs:
     command: 'plan'
