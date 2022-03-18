@@ -28,6 +28,7 @@ steps:
     workingDirectory: './terraform'
     
 
+
 - task: AzureCLI@2
   displayName: Make terraform plan
   inputs:
