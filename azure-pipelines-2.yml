@@ -82,9 +82,9 @@ steps:
   displayName: present rsa key to authorized keys file of the testing environment
   inputs:
         targetType: 'inline'
-        script: 'ansible-playbook add-key.yml --private-key='~/testvm_rsa_key.pem'
+        script: 'ansible-playbook add-key.yml --key-file=~/testvm_rsa_key.pem'
         workingDirectory: './ansible'
-        
+
 - task: TerraformCLI@0
   inputs:
     command: 'destroy'
