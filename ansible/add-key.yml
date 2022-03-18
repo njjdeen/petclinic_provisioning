@@ -1,6 +1,6 @@
 ---
 - name: "Playbook to Add Key to azure VM's"
-  hosts: hosts-to-add-key
+  hosts: $PUBLIC_IP_TESTVM
   vars:
     user: VMadmin
     key: 

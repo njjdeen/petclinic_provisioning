@@ -127,11 +127,15 @@ resource "tls_private_key" "ssh_rsa" {
 
 }
 
+output "public_ip_address" {
+  value = "${azurerm_public_ip.public_ip.ip_address}"
+  sensitive = false
+}
+
 output "tls_private_key" {
   value = tls_private_key.ssh_rsa.private_key_pem 
   sensitive = true
   }
-
 # create virtual machine
 
 resource "azurerm_linux_virtual_machine" "linuxvm" {
