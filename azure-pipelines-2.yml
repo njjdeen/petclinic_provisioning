@@ -82,5 +82,17 @@ steps:
   displayName: present rsa key to authorized keys file of the testing environment
   inputs:
         targetType: 'inline'
-        script: 'ansible-playbook add-key.yml --private-key= ~/testvm_rsa_key.pem'
+        script: 'ansible-playbook add-key.yml --private-key='~/testvm_rsa_key.pem'
         workingDirectory: './ansible'
+
+
+- task: TerraformCLI@0
+  inputs:
+    command: 'destroy'
+    workingDirectory: './terraform'
+    environmentServiceName: 'azure-cli-2022-03-15-08-33-56'
+    providerAzureRmSubscriptionId: '41e50375-b926-4bc4-9045-348f359cf721'
+    runAzLogin: true
+    allowTelemetryCollection: true
+    
+
