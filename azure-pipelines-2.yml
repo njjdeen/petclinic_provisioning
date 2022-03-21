@@ -45,7 +45,7 @@ steps:
   displayName: write private key file to homefolder as testvm_rsa_key.pem
   inputs:
     targetType: 'inline'
-    script: 'terraform output -raw tls_private_key > ~/testvm_rsa_key.pem && sudo chmod 400 ~/testvm_rsa_key.pem'
+    script: 'terraform output -raw tls_private_key > ~/testvm_rsa_key.pem && echo "write succesfull" && sudo chmod 600 ~/testvm_rsa_key.pem'
     workingDirectory: './terraform'
     
     
