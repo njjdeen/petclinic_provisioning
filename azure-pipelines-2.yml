@@ -45,7 +45,7 @@ steps:
   displayName: write private key file to homefolder as testvm_rsa_key.pem
   inputs:
     targetType: 'inline'
-    script: 'terraform output -raw tls_private_key > ~/testvm_rsa_key.pem'
+    script: 'terraform output -raw tls_private_key > ~/testvm_rsa_key.pem && sudo chmod 400 ~/testvm_rsa_key.pem'
     workingDirectory: './terraform'
     
     
@@ -53,7 +53,7 @@ steps:
   displayName: Store public IP of testVM in testvm_public_IP.txt
   inputs:
     targetType: inline
-    script: terraform output -raw public_ip_address > ~/testvm_public_IP && sudo chmod 400 ~/testvm_rsa_key.pem
+    script: terraform output -raw public_ip_address > ~/testvm_public_IP
     workingDirectory: ./terraform
 
 - task: Bash@3
