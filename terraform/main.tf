@@ -128,7 +128,7 @@ resource "tls_private_key" "ssh_rsa" {
 }
 
 output "public_ip_address" {
-  value = "${azurerm_public_ip.public_ip.ip_address}"
+  value = azurerm_linux_virtual_machine.linuxvm.public_ip_address
   sensitive = false
 }
 
