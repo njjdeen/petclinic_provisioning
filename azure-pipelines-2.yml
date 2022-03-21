@@ -78,6 +78,12 @@ steps:
     script: PUBLIC_IP_TESTVM=$(terraform output -raw public_ip_address)
     workingDirectory: ./terraform
     
+  - task: Bash@3
+  displayName: print PUBLIC_IP_TESTVM variable as a test
+  inputs:
+    targetType: inline
+    script: echo $PUBLIC_IP_TESTVM
+
 - task: Bash@3
   displayName: present rsa key to authorized keys file of the testing environment
   inputs:
