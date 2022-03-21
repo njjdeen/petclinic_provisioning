@@ -1,6 +1,6 @@
 ---
 - name: "Playbook to Add Key to azure VM's"
-  hosts: "{{ public_ip }}"
+  hosts: "blablabla"
   vars:
     user: VMadmin
   
