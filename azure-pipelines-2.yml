@@ -1,5 +1,5 @@
 trigger:
-- 'main'
+- none
 
 pool:
   name: 'VM-agent'
@@ -17,17 +17,6 @@ steps:
       az --version
       az account show
 
-
-#- task: AzureCLI@2
-  #displayName: Initialize terraform repo
- # inputs:
-  #  azureSubscription: 'azure-cli-2022-03-15-08-33-56'
-   # scriptType: 'bash'
-   # scriptLocation: 'inlineScript'
-   # inlineScript: pwd && terraform init 
-   # workingDirectory: './terraform'
-    
-    
 - task: TerraformCLI@0
   inputs:
     command: 'init'
@@ -42,17 +31,6 @@ steps:
     #publishPlanResults: 'plan.tf'
     workingDirectory: './terraform'
     
-
-
-#- task: AzureCLI@2
- # displayName: Make terraform plan
-  #inputs:
-   # azureSubscription: azure-cli-2022-03-15-08-33-56
-   # scriptType: bash
-   # scriptLocation: inlineScript
-   # inlineScript: terraform apply
-   # workingDirectory: './terraform'
-   # addSpnToEnvironment: true
 
 - task: TerraformCLI@0
   inputs:
@@ -72,23 +50,17 @@ steps:
     
     
 - task: Bash@3
-  displayName: make variable that points to the IP of the testing VM
+  displayName: Store public IP of testVM in testvm_public_IP.txt
   inputs:
     targetType: inline
-    script: PUBLIC_IP_TESTVM=$(terraform output -raw public_ip_address)
+    script: terraform output -raw public_ip_address > ~/testvm_public_IP.txt
     workingDirectory: ./terraform
-    
-- task: Bash@3
-  displayName: print PUBLIC_IP_TESTVM variable as a test
-  inputs:
-    targetType: inline
-    script: echo $PUBLIC_IP_TESTVM
 
 - task: Bash@3
   displayName: present rsa key to authorized keys file of the testing environment
   inputs:
         targetType: 'inline'
-        script: 'ansible-playbook add-key.yml -e "public_ip_testvm=$PUBLIC_IP_TESTVM" --key-file=~/testvm_rsa_key.pem'
+        script: 'PUBLIC_IP_TESTVM=$(cat ~/testvm_public_IP.txt) && echo $PUBLIC_IP_TESTVM && ansible-playbook add-key.yml --e "public_ip=$PUBLIC_IP_TESTVM" --key-file=~/testvm_rsa_key.pem'
         workingDirectory: './ansible'
 
 - task: TerraformCLI@0
