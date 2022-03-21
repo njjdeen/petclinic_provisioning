@@ -78,7 +78,7 @@ steps:
     script: PUBLIC_IP_TESTVM=$(terraform output -raw public_ip_address)
     workingDirectory: ./terraform
     
-  - task: Bash@3
+- task: Bash@3
   displayName: print PUBLIC_IP_TESTVM variable as a test
   inputs:
     targetType: inline
