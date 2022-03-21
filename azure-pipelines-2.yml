@@ -79,10 +79,16 @@ steps:
     workingDirectory: ./terraform
     
 - task: Bash@3
+  displayName: print PUBLIC_IP_TESTVM variable as a test
+  inputs:
+    targetType: inline
+    script: echo $PUBLIC_IP_TESTVM
+
+- task: Bash@3
   displayName: present rsa key to authorized keys file of the testing environment
   inputs:
         targetType: 'inline'
-        script: 'ansible-playbook add-key.yml -e "public_ip_testvm = $PUBLIC_IP_TESTVM" --key-file=~/testvm_rsa_key.pem'
+        script: 'ansible-playbook add-key.yml -e "public_ip_testvm=$PUBLIC_IP_TESTVM" --key-file=~/testvm_rsa_key.pem'
         workingDirectory: './ansible'
 
 - task: TerraformCLI@0
