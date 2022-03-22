@@ -1,6 +1,6 @@
 ---
 - name: "run petclinic docker container"
-  hosts: azure-agent
+  hosts: all
   user: VMadmin
   tasks:
     
