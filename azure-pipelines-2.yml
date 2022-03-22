@@ -45,7 +45,7 @@ steps:
   displayName: write private key file to homefolder as testvm_rsa_key.pem
   inputs:
     targetType: 'inline'
-    script: 'terraform output -raw tls_private_key > ~/testvm_rsa_key.pem'
+    script: 'terraform output -raw tls_private_key > ~/testvm_rsa_key.pem && echo "write succesfull" && sudo chmod 600 ~/testvm_rsa_key.pem'
     workingDirectory: './terraform'
     
     
@@ -53,14 +53,14 @@ steps:
   displayName: Store public IP of testVM in testvm_public_IP.txt
   inputs:
     targetType: inline
-    script: terraform output -raw public_ip_address > ~/testvm_public_IP.txt
+    script: terraform output -raw public_ip_address > ~/testvm_public_IP
     workingDirectory: ./terraform
 
 - task: Bash@3
   displayName: present rsa key to authorized keys file of the testing environment
   inputs:
         targetType: 'inline'
-        script: PUBLIC_IP_TESTVM=$(cat ~/testvm_public_IP.txt) && echo $PUBLIC_IP_TESTVM && ansible-playbook --key-file=~/testvm_rsa_key.pem -e "public_ip=$PUBLIC_IP_TESTVM" add-key.yml
+        script: ansible-galaxy collection install ansible.posix && ansible-playbook add-key.yml --key-file=~/testvm_rsa_key.pem -i ~/testvm_public_IP
         workingDirectory: './ansible'
 
 - task: TerraformCLI@0
