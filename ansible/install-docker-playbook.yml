@@ -5,8 +5,8 @@
   tasks:
 
     - name: Upgrade all apt packages
-      become: true
-      apt: upgrade=dist force_apt_get=yes
+      become: yes
+      shell: apt-get update -y
 
     - name: Install required packages
       apt: 
