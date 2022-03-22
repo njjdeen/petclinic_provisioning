@@ -4,7 +4,7 @@
   user: VMadmin
   tasks:
 
-   - name: Upgrade all apt packages
+    - name: Upgrade all apt packages
       become: true
       apt: upgrade=dist force_apt_get=yes
 
