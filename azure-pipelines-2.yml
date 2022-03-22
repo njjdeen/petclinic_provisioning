@@ -63,7 +63,33 @@ steps:
         script: ansible-galaxy collection install ansible.posix && ansible-playbook add-key.yml --key-file=~/testvm_rsa_key.pem -i ~/testvm_public_IP
         workingDirectory: './ansible'
 
+
+- task: Bash@3
+  displayName: Install docker on testing VM
+  inputs:
+        targetType: 'inline'
+        script: ansible-playbook install-docker-playbook.yml -i ~/testvm_public_IP
+        workingDirectory: './ansible'
+  
+- task: Bash@3
+  displayName: run docker container with pulled image from public repo
+  inputs:
+        targetType: 'inline'
+        script: ansible-playbook start-container-playbook.yml -i ~/testvm_public_IP
+        workingDirectory: './ansible'
+  
+- task: Bash@3
+  displayName: stop docker container
+  inputs:
+        targetType: 'inline'
+        script: ansible-playbook stop-container-playbook.yml -i ~/testvm_public_IP
+        workingDirectory: './ansible'
+  
+
+
+
 - task: TerraformCLI@0
+  displayName: destroy testing VM
   inputs:
     command: 'destroy'
     workingDirectory: './terraform'
