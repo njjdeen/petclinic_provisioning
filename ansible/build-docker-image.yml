@@ -5,11 +5,13 @@
   tasks:
 
   - name: Remove previously built images if there are any
+    become: yes
     community.docker.docker_image:
       state: absent
       name: nde01/petclinic:latest
    
   - name: Build an image and push it to docker hub
+    become: yes
     community.docker.docker_image:
       name: nde01/petclinic:latest
       build:

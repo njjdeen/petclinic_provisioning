@@ -12,11 +12,21 @@ from selenium.webdriver.chrome.options import Options
 options = Options()
 options.headless = True
 
+
+## Get URL of testing VM
+
+with open('/home/VMadmin/testvm_public_IP', 'r') as file:
+    base_url = file.read().rstrip()
+
+url = "http://" + base_url + ":9999/petclinic"
+
+print(f"Connecting to {url}")
+
 def petclinic_test():
     #initialize driver
     driver = webdriver.Chrome("/usr/bin/chromedriver", options=options)
 
-    driver.get("http://127.0.0.1:9999/petclinic")
+    driver.get(url)
 
     #driver waits 5 seconds when necesarry to load the pages
     driver.implicitly_wait(10)
