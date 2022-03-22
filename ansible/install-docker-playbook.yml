@@ -4,14 +4,9 @@
   user: VMadmin
   tasks:
 
-
-    - name: update and upgrade packages
+   - name: Upgrade all apt packages
       become: true
-      apt: 
-        force_apt_get: yes
-        upgrade: yes
-        #upgrade: dist
-        #cache_valid_time: 86400
+      apt: upgrade=dist force_apt_get=yes
 
     - name: Install required packages
       apt: 
