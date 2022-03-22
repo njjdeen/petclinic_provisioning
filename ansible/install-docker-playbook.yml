@@ -4,13 +4,6 @@
   user: VMadmin
   tasks:
 
-    - name: Install apt
-      apt:
-        name: aptitude
-        state: latest
-        #update_cache: yes
-        #upgrade: dist
-      become: yes
 
     - name: update and upgrade packages
       become: true
