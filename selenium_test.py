@@ -18,7 +18,7 @@ options.headless = True
 with open('/home/VMadmin/testvm_public_IP', 'r') as file:
     base_url = file.read().rstrip()
 
-url = "http://" + base_url + ":9999/petclinic"
+url = "http://" + base_url + ":8080/petclinic"
 
 print(f"Connecting to {url}")
 
