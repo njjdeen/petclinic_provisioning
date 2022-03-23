@@ -46,7 +46,7 @@ def petclinic_test():
 
     #check if edit owner button works, edit and update data (name, address, city, phone number)
     driver.find_element(By.LINK_TEXT,"Add Owner").click()
-    driver.find_element(By.ID,"firstname").clear()
+    driver.find_element(By.ID,"firstName").clear()
     driver.find_element(By.ID,"firstName").send_keys("Niels")
     driver.find_element(By.ID,"lastName").click()
     driver.find_element(By.ID,"lastName").clear()
