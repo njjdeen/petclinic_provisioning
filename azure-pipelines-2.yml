@@ -63,16 +63,16 @@ steps:
         script: ansible-galaxy collection install community.docker && ansible-galaxy collection install ansible.posix && ansible-playbook add-key.yml --key-file=~/testvm_rsa_key.pem -i ~/testvm_public_IP
         workingDirectory: './ansible'
 
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'package'
+#- task: Maven@3
+#  inputs:
+#    mavenPomFile: 'pom.xml'
+#    goals: 'package'
 
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'deploy'
-    mavenOptions: '-DskipTests'
+#- task: Maven@3
+#  inputs:
+#    mavenPomFile: 'pom.xml'
+#    goals: 'deploy'
+#    mavenOptions: '-DskipTests'
 
 
 - task: Bash@3
@@ -81,12 +81,13 @@ steps:
         targetType: 'inline'
         script: ansible-playbook install-docker-playbook.yml -i ~/testvm_public_IP
         workingDirectory: './ansible'
+        
   
 - task: Bash@3
-  displayName: Build new docker image with maven project that was pushed to github
+  displayName: Build new docker image with maven project that was pushed to github, make sure docker is logged into the repository.
   inputs:
         targetType: 'inline'
-        script: ansible-playbook build-docker-image.yml
+        script: docker login -u "nde01" -p $(DOCKERPASSWD) docker.io && ansible-playbook build-docker-image.yml
         workingDirectory: './ansible'
   
 
