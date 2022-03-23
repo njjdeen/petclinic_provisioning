@@ -127,7 +127,7 @@ steps:
       git config --global user.name "Niels Deen" &&
       echo "CURRENT DIRECTORY:" &&
       pwd &&
-      git add . &&
+      git add ./loadtest/dashboard &&
       echo "GIT STATUS" &&
       git status &&
       echo "ADD COMMAND DONE" &&
