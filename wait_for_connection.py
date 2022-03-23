@@ -3,6 +3,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+import time
+
 options = Options()
 options.headless = True
 
@@ -28,5 +30,6 @@ while no_connection:
         
     except:
         print("Webserver is not up yet, retrying within 10 seconds...")
+        time.sleep(10)
     else:
         no_connection = False

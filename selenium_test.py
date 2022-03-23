@@ -29,11 +29,11 @@ def petclinic_test():
     driver.get(url)
 
     #driver waits 5 seconds when necesarry to load the pages
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(30)
 
 
     #check if homebutton works
-    driver.find_element(By.XPATH,"//div[@id='main-navbar']/ul/li/a/span[2]").click()
+    #driver.find_element(By.XPATH,"//div[@id='main-navbar']/ul/li/a/span[2]").click()
 
     #navigate to find owners section and search for last name
     #driver.find_element(By.LINK_TEXT, "Find owners").click()
