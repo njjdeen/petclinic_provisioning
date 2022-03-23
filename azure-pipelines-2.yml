@@ -87,7 +87,7 @@ steps:
   displayName: Build new docker image with maven project that was pushed to github, make sure docker is logged into the repository.
   inputs:
         targetType: 'inline'
-        script: docker login -u "nde01" -p $(DOCKERPASSWD) docker.io && ansible-playbook build-docker-image.yml
+        script: sudo docker login -u "nde01" -p $(DOCKERPASSWD) docker.io && ansible-playbook build-docker-image.yml
         workingDirectory: './ansible'
   
 
