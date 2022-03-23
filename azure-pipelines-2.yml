@@ -125,12 +125,11 @@ steps:
       echo "GIT STATUS" &&
       git status &&
       echo "ADD COMMAND DONE" &&
-      git checkout -b "JMeter-branch" &&
       git commit -m "[skip azurepipelines]" &&
       echo "COMMIT COMMAND DONE" &&
-      git remote set-url origin git@github.com:njjdeen/petclinic_testing.git &&
-      git push -u origin JMeter-branch &&
-      echo "PUSH DONE to JMeter branch, GO TO GITHUB AND MAKE MERGE REQUEST"
+      git remote set-url origin git@github.com:njjdeen/petclinic_provisioning.git &&
+      git push -u origin main &&
+      echo "PUSH DONE to main"
 
 
 # - task: Bash@3
