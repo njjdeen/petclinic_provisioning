@@ -99,6 +99,12 @@ steps:
         workingDirectory: './ansible'
   
 - task: Bash@3
+  displayName: check if petclinic website is already accesible on TestVM
+  inputs:
+    targetType: inline
+    script: python3 wait_for_connection.py
+
+- task: Bash@3
   displayName: run selenium test on TestVM
   inputs:
     targetType: inline
