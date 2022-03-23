@@ -9,5 +9,5 @@
       docker_container:
         name: Petclinic_container
         image: nde01/petclinic:latest
-        command: mvn package cargo:run
+        command: mvn package cargo:run -Dmaven.test.skip=true
         published_ports: 0.0.0.0:8080:9999

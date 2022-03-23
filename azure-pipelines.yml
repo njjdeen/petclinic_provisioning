@@ -15,19 +15,6 @@ steps:
 
 - task: Bash@3
   inputs:
-    targetType: inline
-    script:
-      echo "Removing all previous JMeter results.." &&
-      pwd &&
-      sudo rm -R ./loadtest/dashboard ;
-      mkdir ./loadtest/dashboard ;
-      sudo rm -R ./loadtest/test_log ;
-      mkdir ./loadtest/test_log ;
-      echo "Done." ;
-      echo "test print"
-
-- task: Bash@3
-  inputs:
     targetType: filePath
     filePath: ./JMeter-command-to-run.sh
     
@@ -46,6 +33,6 @@ steps:
       git checkout -b "JMeter-branch" &&
       git commit -m "[skip azurepipelines]" &&
       echo "COMMIT COMMAND DONE" &&
-      git remote set-url origin git@github.com:njjdeen/petclinic_testing.git &&
+      git remote set-url origin git@github.com:njjdeen/petclinic_provisioning.git &&
       git push -u origin JMeter-branch &&
       echo "PUSH DONE to JMeter branch, GO TO GITHUB AND MAKE MERGE REQUEST"
