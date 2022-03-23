@@ -98,8 +98,41 @@ steps:
         script: ansible-playbook start-container-playbook.yml -i ~/testvm_public_IP
         workingDirectory: './ansible'
   
-  
-  
+- task: Bash@3
+  displayName: run selenium test on TestVM
+  inputs:
+    targetType: inline
+    script: 
+      pwd &&
+      pip install selenium ;
+      python3 selenium_test.py &&
+      echo "Selenium test SUCCEEDED"
+
+- task: Bash@3
+  inputs:
+    targetType: filePath
+    filePath: ./JMeter-command-to-run.sh
+    
+- task: Bash@3
+  inputs:
+    targetType: inline
+    script: 
+      git config --global user.email "niels.deen@devoteam.com" &&
+      git config --global user.name "Niels Deen" &&
+      echo "CURRENT DIRECTORY:" &&
+      pwd &&
+      git add . &&
+      echo "GIT STATUS" &&
+      git status &&
+      echo "ADD COMMAND DONE" &&
+      git checkout -b "JMeter-branch" &&
+      git commit -m "[skip azurepipelines]" &&
+      echo "COMMIT COMMAND DONE" &&
+      git remote set-url origin git@github.com:njjdeen/petclinic_testing.git &&
+      git push -u origin JMeter-branch &&
+      echo "PUSH DONE to JMeter branch, GO TO GITHUB AND MAKE MERGE REQUEST"
+
+
 # - task: Bash@3
 #   displayName: stop docker container
 #   inputs:
@@ -107,8 +140,6 @@ steps:
 #         script: ansible-playbook stop-container-playbook.yml -i ~/testvm_public_IP
 #         workingDirectory: './ansible'
   
-
-
 
 # - task: TerraformCLI@0
 #   displayName: destroy testing VM
