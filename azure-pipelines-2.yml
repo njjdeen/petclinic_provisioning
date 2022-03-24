@@ -64,13 +64,15 @@ steps:
         workingDirectory: './ansible'
 
 - task: Maven@3
- inputs:
+  displayName: produce artifact
+  inputs:
    mavenPomFile: 'pom.xml'
    goals: 'package'
-   
+
 
 - task: Maven@3
- inputs:
+  displayName: deploy artifact to Azure Artifacts
+  inputs:
    mavenPomFile: 'pom.xml'
    goals: 'deploy'
    mavenOptions: '-DskipTests'
