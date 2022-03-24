@@ -8,4 +8,5 @@
     become: yes
     docker_container:
       name: Petclinic_container
+      image: nde01/petclinic:latest
       state: stopped
