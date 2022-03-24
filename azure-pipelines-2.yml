@@ -189,8 +189,8 @@ steps:
   displayName: Remove image from local docker host to force fetching of new version from docker hub
   inputs:
         targetType: 'inline'
-        script: ansible-playbook remove-docker-image.yml -i ~/productionvm_public_IP
-        workingDirectory: './ansible'
+        script: sudo docker image rm $(docker images --format "{{.ID}}") --force
+
 
 - task: Bash@3
   displayName: run new docker container on ProductionVM with fresh pulled image from public repo
