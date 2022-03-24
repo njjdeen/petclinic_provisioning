@@ -27,9 +27,11 @@ while no_connection:
 
         #driver waits 5 seconds when necesarry to load the pages
         driver.implicitly_wait(10)
-        
+        driver.find_element(By.XPATH,'//*[@title="find owners"]').click()
     except:
         print("Webserver is not up yet, retrying within 10 seconds...")
         time.sleep(10)
     else:
         no_connection = False
+        print("Webserver seems to be up now!!")
+        time.sleep(5)
