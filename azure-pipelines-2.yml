@@ -120,6 +120,7 @@ steps:
     filePath: ./JMeter-command-to-run.sh
 
 - task: Bash@3
+  displayName: publish JMeter test result to github repo on new branch "JMeter-branch"
   inputs:
     targetType: inline
     script: 
@@ -139,22 +140,58 @@ steps:
       echo "PUSH DONE to JMeter branch, GO TO GITHUB AND MAKE MERGE REQUEST"
 
 
-# - task: Bash@3
-#   displayName: stop docker container
-#   inputs:
-#         targetType: 'inline'
-#         script: ansible-playbook stop-container-playbook.yml -i ~/testvm_public_IP
-#         workingDirectory: './ansible'
+- task: Bash@3
+  displayName: stop docker container in TestVM
+  inputs:
+        targetType: 'inline'
+        script: ansible-playbook stop-container-playbook.yml -i ~/testvm_public_IP
+        workingDirectory: './ansible'
   
 
-# - task: TerraformCLI@0
-#   displayName: destroy testing VM
-#   inputs:
-#     command: 'destroy'
-#     workingDirectory: './terraform'
-#     environmentServiceName: 'azure-cli-2022-03-15-08-33-56'
-#     providerAzureRmSubscriptionId: '41e50375-b926-4bc4-9045-348f359cf721'
-#     runAzLogin: true
-#     allowTelemetryCollection: true
+- task: TerraformCLI@0
+  displayName: destroy TestVM
+  inputs:
+    command: 'destroy'
+    workingDirectory: './terraform'
+    environmentServiceName: 'azure-cli-2022-03-15-08-33-56'
+    providerAzureRmSubscriptionId: '41e50375-b926-4bc4-9045-348f359cf721'
+    runAzLogin: true
+    allowTelemetryCollection: true
     
 
+- task: Bash@3
+  displayName: present rsa key to authorized keys file of the Production environment, install some ansible dependencies
+  inputs:
+        targetType: 'inline'
+        script: ansible-galaxy collection install community.docker && ansible-galaxy collection install ansible.posix && ansible-playbook add-key.yml --key-file=~/productionvm_rsa_key.pem -i ~/productionvm_public_IP
+        workingDirectory: './ansible'
+
+
+- task: Bash@3
+  displayName: Install docker on ProductionVM if necesarry
+  inputs:
+        targetType: 'inline'
+        script: ansible-playbook install-docker-playbook.yml -i ~/productionvm_public_IP
+        workingDirectory: './ansible'
+        
+  
+- task: Bash@3
+  displayName: stop current petclinic container in ProductionVM
+  inputs:
+        targetType: 'inline'
+        script: ansible-playbook stop-container-playbook.yml -i ~/productionvm_public_IP
+        workingDirectory: './ansible'
+  
+- task: Bash@3
+  displayName: Remove image from local docker host to force fetching of new version from docker hub
+  inputs:
+        targetType: 'inline'
+        script: ansible-playbook remove-docker-image.yml -i ~/productionvm_public_IP
+        workingDirectory: './ansible'
+
+- task: Bash@3
+  displayName: run new docker container on ProductionVM with fresh pulled image from public repo
+  inputs:
+        targetType: 'inline'
+        script: ansible-playbook start-container-playbook.yml -i ~/productionvm_public_IP
+        workingDirectory: './ansible'
