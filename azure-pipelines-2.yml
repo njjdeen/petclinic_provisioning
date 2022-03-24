@@ -129,6 +129,8 @@ steps:
     script: 
       git config --global user.email "niels.deen@devoteam.com" &&
       git config --global user.name "Niels Deen" &&
+      git remote set-url origin git@github.com:njjdeen/petclinic_provisioning.git &&     
+      git push --delete origin JMeter-branch &&           
       echo "CURRENT DIRECTORY:" &&
       pwd &&
       git add ./loadtest/dashboard &&
@@ -137,8 +139,7 @@ steps:
       echo "ADD COMMAND DONE" &&
       git checkout -b "JMeter-branch" &&
       git commit -m "[skip azurepipelines]" &&
-      echo "COMMIT COMMAND DONE" &&
-      git remote set-url origin git@github.com:njjdeen/petclinic_provisioning.git &&
+      echo "COMMIT COMMAND DONE" &&   
       git push -u origin JMeter-branch &&
       echo "PUSH DONE to JMeter branch, GO TO GITHUB AND MAKE MERGE REQUEST"
 
