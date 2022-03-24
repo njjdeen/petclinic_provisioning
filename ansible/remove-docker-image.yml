@@ -5,6 +5,7 @@
   tasks:
 
   - name: Remove all images
+    become: yes
     docker_image:
       name: nde01/petclinic:latest
       state: absent
