@@ -1,8 +1,7 @@
 ---
 - name: "Playbook to Add Key to azure VM's"
   hosts: all
-  vars:
-    user: VMadmin
+  user: VMadmin
   
   tasks:
 

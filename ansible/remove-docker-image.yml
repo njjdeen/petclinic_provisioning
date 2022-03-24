@@ -1,0 +1,10 @@
+---
+- name: "stop petclinic docker container"
+  hosts: all
+  user: VMadmin
+  tasks:
+
+  - name: Remove all images
+    docker_image:
+      name: nde01/petclinic:latest
+      state: absent
